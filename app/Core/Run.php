@@ -16,41 +16,29 @@
 
             if(!empty($url))
             {
-
                 $url = explode("/", $url);
-
                 // $url[0] - Classe
                 // $url[1] - Metodo/Função
                 // $url[2] - Parâmetros
-
                 $controller = $url[0]."Controller"; 
                 array_shift($url);
 
                 if(isset($url[0]) && !empty($url[0]))
                 {
-
                     $metodo = $url[0];
                     array_shift($url);
-
                 }else 
                 {
-
                     $metodo = "index";
-
                 }
 
                 if(count($url) > 0)
                 {
-
                     $parametros = $url;
-
                 }
-
             }else
             {
-
                 $controller = "index";
-
             }
 
         }
