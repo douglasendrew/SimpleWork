@@ -36,11 +36,35 @@
                 {
                     $parametros = $url;
                 }
+
             }else
             {
-                $controller = "index";
+                $controller = "homeController";
+                $metodo = "index";
             }
 
+            $dir = __DIR__ . "/../Framework/Controllers/" . $controller . ".php";
+
+            if( file_exists($dir) )
+            {
+
+                require $dir;
+
+                $class = "\SimpleWork\Framework\Controllers\ " . $controller;
+                $class = str_replace(" ", "", $class);
+                
+                $instanc = new $class;
+
+                var_dump(method_exists($instanc, $metodo));
+                
+            }
+
+
+            // require $dir;
+
+            // $instanc = new $controller;
+            // call_user_func_array( array($instanc, $metodo), $parametros );
+            
         }
 
     }

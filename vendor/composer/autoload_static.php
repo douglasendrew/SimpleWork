@@ -23,8 +23,8 @@ class ComposerStaticInit330e7ac1a143051741d48dc3bd0c9f7e
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'SimpleWork\\Core\\Run' => __DIR__ . '/../..' . '/app/Core/Run.php',
+        'SimpleWork\\Framework\\Controllers\\MainController' => __DIR__ . '/../..' . '/app/Framework/Controllers/MainController.php',
         'SimpleWork\\Framework\\Controllers\\homeController' => __DIR__ . '/../..' . '/app/Framework/Controllers/homeController.php',
-        'SimpleWork\\Framework\\Controllers\\mainController' => __DIR__ . '/../..' . '/app/Framework/Controllers/mainController.php',
         'SimpleWork\\Framework\\Database\\Crud' => __DIR__ . '/../..' . '/app/Framework/Database/Crud.php',
         'SimpleWork\\Framework\\Database\\Db' => __DIR__ . '/../..' . '/app/Framework/Database/Db.php',
         'SimpleWork\\Framework\\Routes\\Rotas' => __DIR__ . '/../..' . '/app/Framework/Routes/Rotas.php',
