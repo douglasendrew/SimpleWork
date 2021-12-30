@@ -6,6 +6,8 @@
     class Run
     {
 
+        private static $includes = array();
+
         public static function init()
         {
 
@@ -17,30 +19,36 @@
             if(!empty($url))
             {
                 $url = explode("/", $url);
-                // $url[0] - Classe
-                // $url[1] - Metodo/Função
-                // $url[2] - Parâmetros
+
                 $controller = $url[0]."Controller"; 
                 array_shift($url);
 
                 if(isset($url[0]) && !empty($url[0]))
                 {
+
                     $metodo = $url[0];
                     array_shift($url);
+
                 }else 
                 {
+
                     $metodo = "index";
+
                 }
 
                 if(count($url) > 0)
                 {
+
                     $parametros = $url;
+
                 }
 
             }else
             {
+                
                 $controller = "homeController";
                 $metodo = "index";
+                
             }
 
             $dir = __DIR__ . "/../Framework/Controllers/" . $controller . ".php";
@@ -55,16 +63,76 @@
                 
                 $instanc = new $class;
 
-                var_dump(method_exists($instanc, $metodo));
+                if(method_exists($instanc, $metodo))
+                {
+
+                    call_user_func_array( array($instanc, $metodo), array($parametros) );
+
+                }else {
+
+                    $controller = "errorController";
+                    $metodo = "error404";
+
+                    $class = "\SimpleWork\Framework\Controllers\ " . $controller;
+                    $class = str_replace(" ", "", $class);
+                    
+                    $instanc = new $class;
+
+                    call_user_func_array( array($instanc, $metodo), array($parametros) );
+
+                    exit;
+
+                }
                 
+            }else {
+
+                $controller = "errorController";
+                $metodo = "error404";
+
+                $class = "\SimpleWork\Framework\Controllers\ " . $controller;
+                $class = str_replace(" ", "", $class);
+                
+                $instanc = new $class;
+
+                call_user_func_array( array($instanc, $metodo), array($parametros) );
+
+                exit;
+
             }
 
+            self::loadIncludes();
+        }
 
-            // require $dir;
+        public static function loadIncludes()
+        {
+            require __DIR__ . "/../Config/Includes.php";  
+        }
 
-            // $instanc = new $controller;
-            // call_user_func_array( array($instanc, $metodo), $parametros );
-            
+        public static function include($arq_name, $arq_type)
+        {
+
+            $dir = "includes/". strtolower($arq_type) . "/" . $arq_name;
+
+            if(file_exists($dir))
+            {
+                if(strtolower($arq_type) == "js")
+                {
+                    echo '<script src="'.$dir.'"></script>';
+                } else if(strtolower($arq_type) == "css")
+                {
+                    echo '<link rel="stylesheet" href="'.$dir.'">';
+                } else {
+                    require $dir;
+                }
+            }
+
+        }
+
+        public static function dir_include($arq_dir, $arq_type)
+        {
+
+            require __DIR__ . "/../../includes/". strtolower($arq_type) . "/" . $arq_dir;
+
         }
 
     }

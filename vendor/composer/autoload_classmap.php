@@ -9,8 +9,10 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'SimpleWork\\Core\\Run' => $baseDir . '/app/Core/Run.php',
     'SimpleWork\\Framework\\Controllers\\MainController' => $baseDir . '/app/Framework/Controllers/MainController.php',
+    'SimpleWork\\Framework\\Controllers\\errorController' => $baseDir . '/app/Framework/Controllers/errorController.php',
     'SimpleWork\\Framework\\Controllers\\homeController' => $baseDir . '/app/Framework/Controllers/homeController.php',
     'SimpleWork\\Framework\\Database\\Crud' => $baseDir . '/app/Framework/Database/Crud.php',
     'SimpleWork\\Framework\\Database\\Db' => $baseDir . '/app/Framework/Database/Db.php',
+    'SimpleWork\\Framework\\Models\\MainModel' => $baseDir . '/app/Framework/Models/MainModel.php',
     'SimpleWork\\Framework\\Routes\\Rotas' => $baseDir . '/app/Framework/Routes/Rotas.php',
 );

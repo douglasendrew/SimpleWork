@@ -7,18 +7,12 @@
 
         public function index()
         {
-
-            echo "Salve!";
-            $this->model_load("home/homeView.php");
-
+            $this->view("home/homeView.php");
         }
 
-        public function teste()
+        public function teste($teste)
         {
-
-            echo "Salve!";
-            $this->model_load("home/homeView.php");
-
+            $this->view("home/homeView.php");
         }
 
     }
