@@ -8,10 +8,10 @@
         public function view($view_diretorio)
         {
 
-            if (file_exists(__DIR__ . "/../View/$view_diretorio"))
+            if (file_exists(__DIR__ . "/../View/$view_diretorio.php"))
             {
 
-                require __DIR__ . "/../View/$view_diretorio";
+                require __DIR__ . "/../View/$view_diretorio.php";
 
             } else {
 
@@ -19,6 +19,17 @@
 
             }
 
+        }
+
+        public function model($model_name)
+        {
+
+            if (file_exists(__DIR__ . "/../Models/$model_name.php"))
+            {
+
+                require __DIR__ . "/../Models/$model_name.php";
+
+            }
         }
 
     }

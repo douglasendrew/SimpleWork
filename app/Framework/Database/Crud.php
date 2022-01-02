@@ -9,10 +9,8 @@
         public static function select(array $item, $from, array $where)
         {
 
-            // Verifica se todos parametros foram preenchidos
             if (!empty($item) and !empty($from) and !empty($where)) {
 
-                // Pegar valores dos campos a serem puxados
                 $campos = "";
                 $counterCampos = 0;
 
@@ -31,7 +29,6 @@
 
                 }
 
-                // Pegar valores do where
                 $whereText = "";
                 $counter = 0;
 
@@ -84,10 +81,8 @@
         public static function insert($table, array $campos, array $valores)
         {
 
-            // Verifica se todos parametros foram preenchidos
             if (!empty($table) and !empty($campos) and !empty($valores)) {
 
-                // Pegar campos a serem inseridos
                 $camposPreencher = "";
                 $counterCampos = 0;
 
@@ -106,7 +101,6 @@
 
                 }
 
-                // Pegar valores do where
                 $valoresCampos = "";
                 $counter = 0;
 

@@ -18,7 +18,7 @@
         public static function loaderAll()
         {
 
-            require __DIR__ . "/../Config/rotas.php";
+            require __DIR__ . "/../../Config/rotas.php";
 
         }
 
@@ -26,10 +26,10 @@
         {
 
             $a = explode("/", $route_name);
-            $modulo = $a[0];
+            $controller = $a[0];
             $metodo = $a[1];
 
-            $type = array("ROUTE" => $route_name, "MODULO" => $modulo, "METODO" => $metodo, "TYPE" => $req_type);
+            $type = array("ROUTE" => $route_name, "CONTROLLER" => $controller, "METODO" => $metodo, "TYPE" => $req_type);
             array_push(self::$rotas, $type) or die("Não foi possível adicionar a rota solicitada");
             return true;
 

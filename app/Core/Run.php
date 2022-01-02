@@ -3,14 +3,22 @@
     // MVC Url: http://www.exemplo.com/controlador/ação/parametro1/parametro2/etc…
     namespace SimpleWork\Core;
 
+    use SimpleWork\Framework\Routes\Rotas;
+
     class Run
     {
 
         private static $includes = array();
+        private static $tipo_requisicao;
+        private static $rota;
 
         public static function init()
         {
 
+            self::loadIncludes();
+            self::$tipo_requisicao = $_SERVER['REQUEST_METHOD'];
+            
+            // Pegar informações da URL
             if(isset($_GET['pag']))
             {
                 $url = $_GET['pag'];
@@ -25,32 +33,70 @@
 
                 if(isset($url[0]) && !empty($url[0]))
                 {
-
                     $metodo = $url[0];
                     array_shift($url);
-
                 }else 
                 {
-
                     $metodo = "index";
-
                 }
 
                 if(count($url) > 0)
                 {
-
                     $parametros = $url;
+                }
+            }else
+            {
+                $controller = "homeController";
+                $metodo = "index";
+            }
+            // FIM => URL
+
+            // Configurações das rotas
+            if(isset($controller))
+            {
+
+                $controller = str_replace("Controller", "", $controller);
+                self::$rota = $controller;
+
+                if(isset($metodo) and !empty($metodo))
+                {
+                    
+                    self::$rota .= "/".$metodo;
+
+                    if(isset($parametros) and !empty($parametros))
+                    {
+                        self::$rota .= "/";
+                    }
 
                 }
 
-            }else
-            {
-                
-                $controller = "homeController";
-                $metodo = "index";
-                
             }
 
+            $request_method = Rotas::get(self::$rota);
+            // FIM => Rotas
+
+            if($request_method != self::$tipo_requisicao)
+            {
+                
+                if($request_method == "PUT")
+                {
+
+                    if( !isset($parametros) or empty($parametros) )
+                    {
+                        $controller = "errorController";
+                        $metodo = "error404";
+                    }
+                    
+                }else {
+
+                    $controller = "errorController";
+                    $metodo = "error404";
+
+                }
+
+            }
+
+            $controller = $controller."Controller";
             $dir = __DIR__ . "/../Framework/Controllers/" . $controller . ".php";
 
             if( file_exists($dir) )
@@ -100,7 +146,6 @@
 
             }
 
-            self::loadIncludes();
         }
 
         public static function loadIncludes()
