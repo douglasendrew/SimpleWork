@@ -12,16 +12,21 @@
         <div class="uk-align-left">
             </div>
             
-        <div class="uk-align-right ">
+        <div class="uk-align-right uk-margin-medium-top">
+
             <span class="obs-text">v 1.0</span>
 
             |
+            
+            <span class="obs-text">Desenvolvido por <a href="https://github.com/douglasendrew" target="_blank">douglasendrew</a></span>
+             
+            | 
 
             <a href="https://github.com/douglasendrew/SimpleWork" style="color: gray;" target="_blank">
                 <span class="obs-text">Documentação </span>
                 <a href="" uk-icon="icon: file-text"></a>
             </a>
-            
+           
         </div>
 
     </div>
