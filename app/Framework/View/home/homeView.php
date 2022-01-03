@@ -2,8 +2,11 @@
     <div class="box-initial uk-margin-xlarge-top uk-card uk-card-default uk-card-body uk-width-1-1@m">
         
         <div class="font-text">
-            <div class="font-title">SimpleWork</div>
-            Tudo pronto para começar? 🚀    
+            <div class="font-title">SimpleWork <div class="sub-title">(Open Source)</div></div>
+            
+            <div class="uk-margin-medium-top">
+                Tudo pronto para começar? 🚀    
+            </div>
         </div>
 
         <div class="uk-align-left">
