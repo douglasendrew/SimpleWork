@@ -15,7 +15,6 @@
         public static function init()
         {
 
-            self::loadIncludes();
             self::$tipo_requisicao = $_SERVER['REQUEST_METHOD'];
 
             // Pegar informações da URL

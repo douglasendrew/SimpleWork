@@ -2,4 +2,4 @@
 
     use SimpleWork\Framework\Page\Site;
 
-    Site::site_name("MEU SITE");
+    Site::site_name("SimpleWork");
