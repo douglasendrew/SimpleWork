@@ -1,4 +1,4 @@
-<?php 
+<?php
 
     // MVC Url: http://www.exemplo.com/controlador/ação/parametro1/parametro2/etc…
     namespace SimpleWork\Core;
@@ -17,169 +17,140 @@
 
             self::loadIncludes();
             self::$tipo_requisicao = $_SERVER['REQUEST_METHOD'];
-            
+
             // Pegar informações da URL
-            if(isset($_GET['pag']))
-            {
+            if (isset($_GET['pag'])) {
                 $url = $_GET['pag'];
             }
 
-            if(!empty($url))
-            {
+            if (!empty($url)) {
                 $url = explode("/", $url);
 
-                $controller = $url[0]."Controller"; 
+                $controller = $url[0] . "Controller";
                 array_shift($url);
 
-                if(isset($url[0]) && !empty($url[0]))
-                {
+                if (isset($url[0]) && !empty($url[0])) {
                     $metodo = $url[0];
                     array_shift($url);
-                }else 
-                {
+                } else {
                     $metodo = "index";
                 }
 
-                if(count($url) > 0)
-                {
+                if (count($url) > 0) {
                     $parametros = $url;
                 }
-            }else
-            {
+            } else {
                 $controller = "homeController";
                 $metodo = "index";
             }
             // FIM => URL
 
             // Configurações das rotas
-            if(isset($controller))
-            {
+            if (isset($controller)) {
 
                 $controller = str_replace("Controller", "", $controller);
                 self::$rota = $controller;
 
-                if(isset($metodo) and !empty($metodo))
-                {
-                    
-                    self::$rota .= "/".$metodo;
+                if (isset($metodo) and !empty($metodo)) {
 
-                    if(isset($parametros) and !empty($parametros))
-                    {
+                    self::$rota .= "/" . $metodo;
+
+                    if (isset($parametros) and !empty($parametros)) {
                         self::$rota .= "/";
                     }
-
                 }
-
             }
 
             $request_method = Rotas::get(self::$rota);
+
             // FIM => Rotas
 
-            if($request_method != self::$tipo_requisicao)
-            {
-                
-                if($request_method == "PUT")
-                {
 
-                    if( !isset($parametros) or empty($parametros) )
-                    {
+            if ($request_method != self::$tipo_requisicao) {
+
+
+                if ($request_method == "PUT") {
+
+                    if (!isset($parametros) or empty($parametros)) {
                         $controller = "errorController";
-                        $metodo = "error404";
+                        $metodo = "errorRotas";
                     }
-                    
-                }else {
+                } else {
 
                     $controller = "errorController";
                     $metodo = "error404";
-
                 }
-
             }
 
-            $controller = $controller."Controller";
+            $controller = $controller . "Controller";
             $dir = __DIR__ . "/../Framework/Controllers/" . $controller . ".php";
 
-            if( file_exists($dir) )
-            {
+            if (file_exists($dir)) {
 
                 require $dir;
 
                 $class = "\SimpleWork\Framework\Controllers\ " . $controller;
                 $class = str_replace(" ", "", $class);
-                
+
                 $instanc = new $class;
 
-                if(method_exists($instanc, $metodo))
-                {
+                if (method_exists($instanc, $metodo)) {
 
-                    call_user_func_array( array($instanc, $metodo), array($parametros) );
-
-                }else {
+                    call_user_func_array(array($instanc, $metodo), array($parametros));
+                } else {
 
                     $controller = "errorController";
                     $metodo = "error404";
 
                     $class = "\SimpleWork\Framework\Controllers\ " . $controller;
                     $class = str_replace(" ", "", $class);
-                    
+
                     $instanc = new $class;
 
-                    call_user_func_array( array($instanc, $metodo), array($parametros) );
+                    call_user_func_array(array($instanc, $metodo), array($parametros));
 
                     exit;
-
                 }
-                
-            }else {
+            } else {
 
                 $controller = "errorController";
                 $metodo = "error404";
 
                 $class = "\SimpleWork\Framework\Controllers\ " . $controller;
                 $class = str_replace(" ", "", $class);
-                
+
                 $instanc = new $class;
 
-                call_user_func_array( array($instanc, $metodo), array($parametros) );
+                call_user_func_array(array($instanc, $metodo), array($parametros));
 
                 exit;
-
             }
-
         }
 
         public static function loadIncludes()
         {
-            require __DIR__ . "/../Config/Includes.php";  
+            require __DIR__ . "/../Config/Includes.php";
         }
 
         public static function include($arq_name, $arq_type)
         {
 
-            $dir = "includes/". strtolower($arq_type) . "/" . $arq_name;
+            $dir = "includes/" . strtolower($arq_type) . "/" . $arq_name;
 
-            if(file_exists($dir))
-            {
-                if(strtolower($arq_type) == "js")
-                {
-                    echo '<script src="'.$dir.'"></script>';
-                } else if(strtolower($arq_type) == "css")
-                {
-                    echo '<link rel="stylesheet" href="'.$dir.'">';
+            if (file_exists($dir)) {
+                if (strtolower($arq_type) == "js") {
+                    echo '<script src="' . $dir . '"></script>';
+                } else if (strtolower($arq_type) == "css") {
+                    echo '<link rel="stylesheet" href="' . $dir . '">';
                 } else {
                     require $dir;
                 }
             }
-
         }
 
         public static function dir_include($arq_dir, $arq_type)
         {
 
-            require __DIR__ . "/../../includes/". strtolower($arq_type) . "/" . $arq_dir;
-
+            require __DIR__ . "/../../includes/" . strtolower($arq_type) . "/" . $arq_dir;
         }
-
     }
-
-?>

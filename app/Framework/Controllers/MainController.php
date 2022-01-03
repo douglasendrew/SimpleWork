@@ -32,4 +32,17 @@
             }
         }
 
+        public function has_parmission()
+        {
+
+            // (!) Esse valor deve ser recuperado do banco de dados
+            $have_permission = 1; 
+
+            if($have_permission == 1)
+            {
+                return true;
+            }
+
+        }
+
     }

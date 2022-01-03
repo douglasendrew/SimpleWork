@@ -6,10 +6,10 @@
 
     class Crud {
 
-        public static function select(array $item, $from, array $where)
+        public static function select(array $item, $from, array $where, array $orderby)
         {
 
-            if (!empty($item) and !empty($from) and !empty($where)) {
+            if (!empty($item) and !empty($from)) {
 
                 $campos = "";
                 $counterCampos = 0;
@@ -29,25 +29,41 @@
 
                 }
 
-                $whereText = "";
-                $counter = 0;
+                if($where != null)
+                {
 
-                foreach ($where as $key => $value) {
-
-                    $counter++;
-                    if (count($where) == $counter) {
-
-                        $whereText .= " " . $key . " = '" . $value . "'";
-
-                    } else {
-
-                        $whereText .= $key . " = '" . $value . "' AND ";
-
+                    $whereText = "WHERE ";
+                    $counter = 0;
+        
+                    foreach ($where as $key => $value) {
+        
+                        $counter++;
+                        if (count($where) == $counter) {
+        
+                            $whereText .= " " . $key . " = '" . $value . "'";
+        
+                        } else {
+        
+                            $whereText .= $key . " = '" . $value . "' AND ";
+        
+                        }
+        
                     }
+
 
                 }
 
-                $sql = "SELECT $campos FROM $from WHERE $whereText";
+                $sql = "SELECT $campos FROM $from $whereText";
+
+                if($orderby != null)
+                {
+                    foreach ( $orderby as  $key => $order )
+                    {
+                        $sql .= "ORDER BY $key $order";
+                    }
+                    
+                }
+
                 $insert = Db::db_connect()->prepare($sql);
 
                 if ($insert->execute()) {
@@ -65,15 +81,13 @@
 
                 } else {
 
-                    echo "Consulta não realizada, verifique se você preencheu corretamente";
+                    return false;
                     exit;
 
                 }
             } else {
-
                 echo "Todos paramentros precisam ser preenchidos";
                 exit;
-
             }
 
         }
@@ -200,5 +214,60 @@
             }
 
         }
-        
+
+
+        public static function delete( $from, array $where )
+        {
+            if (!empty($from)) {
+
+                $delete_string_sql = "DELETE FROM $from";
+
+                if($where != null)
+                {
+
+                    $whereText = " WHERE ";
+                    $counter = 0;
+                    foreach ($where as $key => $value) {
+                        $counter++;
+                        if (count($where) == $counter) {
+
+                            $whereText .= " " . $key . " = '" . $value . "'";
+
+                        } else {
+
+                            $whereText .= $key . " = '" . $value . "' AND ";
+
+                        }
+                    }
+
+                    $delete_string_sql .= $whereText;
+
+                }
+
+                $teste = Db::db_connect()->prepare($delete_string_sql);
+
+                if ($teste->execute()) {
+
+                    if ($teste->rowCount() > 0) {
+
+                        return true;
+
+                    } else {
+
+                        return "Nenhum resultado foi encontrado";
+
+                    }
+
+                } else {
+
+                    return "Consulta não realizada, verifique se você preencheu corretamente";
+
+                }
+
+            } else {
+
+                return "Todos paramentros precisam ser preenchidos";
+
+            }
+        }
     }

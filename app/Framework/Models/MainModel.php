@@ -7,12 +7,12 @@
     class MainModel extends Db
     {
 
-        private static $model_name;
+        private $table;
 
-        public static function table($model_name)
+        public function table($table_name)
         {
-            self::$model_name = $model_name;
-            return self::$model_name;
+            $this->table = $table_name;
+            return $this->table;
         }
 
     }
