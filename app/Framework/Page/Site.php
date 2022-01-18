@@ -1,12 +1,13 @@
-<?php 
+<?php
 
     namespace SimpleWork\Framework\Page;
 
-    class Site 
+    class Site
     {
 
         public static $nome_site;
         public static $page_name;
+        public static $url_site;
 
         public function __construct()
         {
@@ -17,7 +18,7 @@
         {
             require __DIR__ . "/../../Config/page.php";
         }
-        
+
         // Nome do site
         public static function site_name($site)
         {
@@ -48,12 +49,40 @@
         public static function genTitlePage()
         {
             self::load();
-            if(empty(self::$page_name))
-            {
+            if (empty(self::$page_name)) {
                 return self::$nome_site;
-            }else {
+            } else {
                 return self::getSiteName() . " - " . self::getPageName();
             }
         }
 
+        // Função para setar a url do site
+        // public static function set_url($url)
+        // {
+        //     $http = array(
+        //         "http", "https",
+        //         "http:", "https:",
+        //         "http:/", "https:/",
+        //         "http://", "https://"
+        //     );
+
+        //     foreach ($http as $typeHttp)
+        //     {
+        //         if(strpos($url, $typeHttp) !== false)
+        //         {
+                    
+        //         }
+        //     }
+
+        //     if (!empty($_SERVER['HTTPS']))
+        //     {
+        //         echo 'HTTPS está ativo';
+        //     }
+        //     else
+        //     {
+        //         echo 'HTTP está ativo' . "\n";
+        //     }
+
+        //     self::$url_site = $url;
+        // }
     }

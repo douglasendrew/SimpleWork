@@ -42,7 +42,6 @@
                 $controller = "homeController";
                 $metodo = "index";
             }
-            // FIM => URL
 
             // Configurações das rotas
             if (isset($controller)) {
@@ -61,9 +60,6 @@
             }
 
             $request_method = Rotas::get(self::$rota);
-
-            // FIM => Rotas
-
 
             if ($request_method != self::$tipo_requisicao) {
 
@@ -106,6 +102,7 @@
 
                     $instanc = new $class;
 
+                   
                     call_user_func_array(array($instanc, $metodo), array($parametros));
 
                     exit;
@@ -144,6 +141,15 @@
                 } else {
                     require $dir;
                 }
+            }
+        }
+
+        public static function url_include($url, $type_arquivo)
+        {
+            if (strtolower($type_arquivo) == "js") {
+                echo '<script src="' . $url . '"></script>';
+            } else if (strtolower($type_arquivo) == "css") {
+                echo '<link rel="stylesheet" href="' . $url . '">';
             }
         }
 

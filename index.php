@@ -1,3 +1,4 @@
+
 <?php
 
     // Não mostrar erros

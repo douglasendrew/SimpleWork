@@ -5,7 +5,7 @@
             <div class="font-title">SimpleWork <div class="sub-title">(Open Source)</div></div>
             
             <div class="uk-margin-medium-top">
-                Tudo pronto para começar? 🚀    
+                Tudo pronto para começar? 🚀     
             </div>
         </div>
 
@@ -22,6 +22,7 @@
              
             | 
 
+        </div>
             <a href="https://github.com/douglasendrew/SimpleWork" style="color: gray;" target="_blank">
                 <span class="obs-text">Documentação </span>
                 <a href="" uk-icon="icon: file-text"></a>
@@ -31,3 +32,4 @@
 
     </div>
 </div>
+
