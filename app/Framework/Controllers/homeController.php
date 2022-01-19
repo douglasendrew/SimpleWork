@@ -20,4 +20,9 @@
             $this->view("home/usuariosView");
         }
 
+        public function publicarArtigo()
+        {
+            $this->view("home/publicarArtigoView");
+        }
+
     }

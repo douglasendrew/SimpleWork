@@ -33,8 +33,5 @@
     Config::include("style.css", "css");
     Config::include("uikit-rtl.min.css", "css");
     Config::include("uikit.min.css", "css");
-
-    // Link include
-    Config::url_include("https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css", "js");
     
 ?>
