@@ -131,14 +131,6 @@
         public static function include($arq_name, $arq_type)
         {
 
-            if (!empty($_SERVER['HTTPS'])) {
-                $http = 'https://';
-            }else{
-                $http = 'http://';
-            }
-
-            $a = "$http$_SERVER[HTTP_HOST]/SimplesWork/";
-
             $dir = "includes/" . strtolower($arq_type) . "/" . $arq_name;
 
             if (file_exists($dir)) {
@@ -150,6 +142,7 @@
                     require $dir;
                 }
             }
+
         }
 
         public static function url_include($url, $type_arquivo)

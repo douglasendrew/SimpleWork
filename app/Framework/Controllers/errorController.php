@@ -2,11 +2,14 @@
 
     namespace SimpleWork\Framework\Controllers;
 
+    use SimpleWork\Framework\Page\Site;
+
     class errorController extends MainController
     {
 
         public function error404()
         {
+            Site::page_name("404");
             $this->view("error/404.php");
         }
 
