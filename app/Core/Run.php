@@ -131,16 +131,14 @@
         public static function include($arq_name, $arq_type)
         {
 
-            $dir = "includes/" . strtolower($arq_type) . "/" . $arq_name;
+            $dir = "/SimpleWork/includes/" . strtolower($arq_type) . "/" . $arq_name;
 
-            if (file_exists($dir)) {
-                if (strtolower($arq_type) == "js") {
-                    echo '<script src="' . $dir . '"></script>';
-                } else if (strtolower($arq_type) == "css") {
-                    echo '<link rel="stylesheet" href="' . $dir . '">';
-                } else {
-                    require $dir;
-                }
+            if (strtolower($arq_type) == "js") {
+                echo '<script src="' . $dir . '"></script>';
+            } else if (strtolower($arq_type) == "css") {
+                echo '<link rel="stylesheet" href="' . $dir . '">';
+            } else {
+                require $dir;
             }
 
         }
