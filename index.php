@@ -1,7 +1,5 @@
 <?php
 
-    echo $_SERVER["REQUEST_URI"];
-
     // Não mostrar erros
     error_reporting(0);
 
