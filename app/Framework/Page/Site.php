@@ -55,34 +55,40 @@
                 return self::getSiteName() . " - " . self::getPageName();
             }
         }
+        
+        public static function getSiteLink()
+        {
 
-        // Função para setar a url do site
-        // public static function set_url($url)
-        // {
-        //     $http = array(
-        //         "http", "https",
-        //         "http:", "https:",
-        //         "http:/", "https:/",
-        //         "http://", "https://"
-        //     );
+            $http = (!empty($_SERVER['HTTPS'])) ? "https://":"http://"; 
+            $dominio = $_SERVER["HTTP_HOST"];
+            $diretorio = $_SERVER["REQUEST_URI"];
 
-        //     foreach ($http as $typeHttp)
-        //     {
-        //         if(strpos($url, $typeHttp) !== false)
-        //         {
-                    
-        //         }
-        //     }
+            if(strtolower($dominio) == "localhost")
+            {
+                $diretorio = explode("/", $diretorio);
+                return $http.$dominio."/".$diretorio[1]."/";
+            }else {
+                return $http.$dominio."/";
+            }
+        }
 
-        //     if (!empty($_SERVER['HTTPS']))
-        //     {
-        //         echo 'HTTPS está ativo';
-        //     }
-        //     else
-        //     {
-        //         echo 'HTTP está ativo' . "\n";
-        //     }
+        public static function redirect( string $caminho ) {
+            header("Location: " . self::getSiteLink() . $caminho);
+        } 
+        
+        // Definir se é requirido login pra entrar na página
+        public static function require_login( $resp )
+        {
+            if( $resp == true )
+            {
+                if(!isset($_SESSION['logged']) and $_SESSION['logged'] != true)
+                {
+                        $view = new View();
+                        $view->view("login/loginView");
+                        exit;
+                }
+            }
+        } 
 
-        //     self::$url_site = $url;
-        // }
+        
     }
