@@ -5,7 +5,7 @@
             <div class="uk-margin-small-top">
                 Tudo pronto para começar? 🚀   
                 <div>
-                    <a href="https://github.com/douglasendrew/SimpleWork" style="color: gray;" target="_blank">
+                    <a href="<?=  $Data['link_simplework'] ?>" style="color: gray;" target="_blank">
                         <span class="obs-text">Documentação </span>
                         <span uk-icon="icon: file-text"></span>
                     </a>
@@ -13,9 +13,8 @@
             </div>
         </div>
         <div class="uk-align-right uk-margin-medium-top">
-            <span class="obs-text">Desenvolvido por <a href="https://github.com/douglasendrew" target="_blank">douglasendrew</a> |</span>
-            <span class="obs-text">v 1.0</span>
+            <span class="obs-text">Desenvolvido por <a href="<?=  $Data['link_github'] ?>" target="_blank">douglasendrew</a> |</span>
+            <span class="obs-text"><?=  $Data['version'] ?></span>
         </div>
     </div>
 </div>
-

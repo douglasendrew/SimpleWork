@@ -12,7 +12,12 @@
         public function index()
         {
             Site::page_name("Home");
-            $this->view("home/homeView");
+            $this->view("home/homeView", [
+                "version" => "v1.0",
+                "author" => "Douglas Endrew",
+                "link_github" => "https://github.com/douglasendrew",
+                "link_simplework" => "https://github.com/douglasendrew/SimpleWork"
+            ]);
         }
 
     }
