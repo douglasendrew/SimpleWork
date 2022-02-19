@@ -4,7 +4,7 @@
 
     use SimpleWork\Framework\Models\MainModel as Db;
 
-    class usuariosModel
+    class homeModel extends Db
     {
         
         public function ususariosList()

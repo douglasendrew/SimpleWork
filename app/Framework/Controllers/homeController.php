@@ -8,10 +8,10 @@
 
     class homeController extends MainController
     {
-
         public function index()
         {
             Site::page_name("Home");
+            
             $this->view("home/homeView", [
                 "version" => "v1.0",
                 "author" => "Douglas Endrew",
@@ -19,5 +19,4 @@
                 "link_simplework" => "https://github.com/douglasendrew/SimpleWork"
             ]);
         }
-
     }

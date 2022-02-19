@@ -134,7 +134,7 @@
         public static function include($arq_name, $arq_type)
         {
             $dir = Site::getSiteLink() . "includes/" . strtolower($arq_type) . "/" . $arq_name;
-
+            
             if (strtolower($arq_type) == "js") {
                 echo '<script src="' . $dir . '"></script>';
             } else if (strtolower($arq_type) == "css") {
