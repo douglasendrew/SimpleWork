@@ -4,6 +4,7 @@
     namespace SimpleWork\Core;
 
     use SimpleWork\Framework\Routes\Rotas;
+    use SimpleWork\Framework\Page\Site;
 
     class Run
     {
@@ -15,6 +16,8 @@
         public static function init()
         {
 
+            session_start();
+            
             self::$tipo_requisicao = $_SERVER['REQUEST_METHOD'];
 
             // Pegar informações da URL
@@ -130,17 +133,14 @@
 
         public static function include($arq_name, $arq_type)
         {
+            $dir = Site::getSiteLink() . "includes/" . strtolower($arq_type) . "/" . $arq_name;
 
-            $dir = "includes/" . strtolower($arq_type) . "/" . $arq_name;
-
-            if (file_exists($dir)) {
-                if (strtolower($arq_type) == "js") {
-                    echo '<script src="' . $dir . '"></script>';
-                } else if (strtolower($arq_type) == "css") {
-                    echo '<link rel="stylesheet" href="' . $dir . '">';
-                } else {
-                    require $dir;
-                }
+            if (strtolower($arq_type) == "js") {
+                echo '<script src="' . $dir . '"></script>';
+            } else if (strtolower($arq_type) == "css") {
+                echo '<link rel="stylesheet" href="' . $dir . '">';
+            } else {
+                require $dir;
             }
         }
 
@@ -155,7 +155,6 @@
 
         public static function dir_include($arq_dir, $arq_type)
         {
-
             require __DIR__ . "/../../includes/" . strtolower($arq_type) . "/" . $arq_dir;
         }
     }

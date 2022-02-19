@@ -56,33 +56,58 @@
             }
         }
 
-        // Função para setar a url do site
-        // public static function set_url($url)
-        // {
-        //     $http = array(
-        //         "http", "https",
-        //         "http:", "https:",
-        //         "http:/", "https:/",
-        //         "http://", "https://"
-        //     );
+        public static function getSiteLink()
+        {
+            $http = (!empty($_SERVER['HTTPS'])) ? "https://":"http://"; 
+            $dominio = $_SERVER["HTTP_HOST"];
+            $diretorio = $_SERVER["REQUEST_URI"];
 
-        //     foreach ($http as $typeHttp)
-        //     {
-        //         if(strpos($url, $typeHttp) !== false)
-        //         {
-                    
-        //         }
-        //     }
+            if(strtolower($dominio) == "localhost")
+            {
+                $diretorio = explode("/", $diretorio);
+                return $http.$dominio."/".$diretorio[1]."/";
+            }else {
+                return $http.$dominio."/";
+            }
+        }
 
-        //     if (!empty($_SERVER['HTTPS']))
-        //     {
-        //         echo 'HTTPS está ativo';
-        //     }
-        //     else
-        //     {
-        //         echo 'HTTP está ativo' . "\n";
-        //     }
+        public static function redirect( string $caminho ) {
+            header("Location: " . self::getSiteLink() . $caminho);
+        }
 
-        //     self::$url_site = $url;
-        // }
+        public static function require_login( $resp )
+        {   
+            session_start();
+            
+            if( $resp == true )
+            {
+                if(!isset($_SESSION['logged']) and $_SESSION['logged'] != true)
+                {
+                    self::redirect("login");
+                    exit;
+                }
+            }
+        } 
+
+        public static function minify_page($buffer)
+        {
+            $search = array(
+                '/\>[^\S ]+/s',     // strip whitespaces after tags, except space
+                '/[^\S ]+\</s',     // strip whitespaces before tags, except space
+                '/(\s)+/s',         // shorten multiple whitespace sequences
+                '/<!--(.|\s)*?-->/' // Remove HTML comments
+            );
+        
+            $replace = array(
+                '>',
+                '<',
+                '\\1',
+                ''
+            );
+        
+            $buffer = preg_replace($search, $replace, $buffer);
+        
+            return $buffer;
+        }
+        
     }

@@ -22,6 +22,7 @@
 
         public static function load()
         {
+            
             require __DIR__ . "/../../Config/database.php";
         }
 
