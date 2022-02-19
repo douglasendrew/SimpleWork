@@ -142,19 +142,36 @@
             } else {
                 require $dir;
             }
+
         }
 
         public static function url_include($url, $type_arquivo)
         {
+
             if (strtolower($type_arquivo) == "js") {
                 echo '<script src="' . $url . '"></script>';
             } else if (strtolower($type_arquivo) == "css") {
                 echo '<link rel="stylesheet" href="' . $url . '">';
             }
+
         }
 
         public static function dir_include($arq_dir, $arq_type)
         {
             require __DIR__ . "/../../includes/" . strtolower($arq_type) . "/" . $arq_dir;
         }
+
+        public static function get_url()
+        {
+
+            if (!empty($_SERVER['HTTPS'])) {
+                $http = 'https://';
+            }else{
+                $http = 'http://';
+            }
+
+            return "$http$_SERVER[HTTP_HOST]/SimplesWork/";
+
+        }
+
     }
