@@ -12,7 +12,7 @@
         public function index()
         {
             Site::page_name("Login");
-            $this->view("login/loginView");
+            $this->view("login/loginView", []);
         }
 
     }

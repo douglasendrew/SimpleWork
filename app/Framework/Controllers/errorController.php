@@ -10,12 +10,12 @@
         public function error404()
         {
             Site::page_name("404");
-            $this->view("error/404.php");
+            $this->view("error/404.php", []);
         }
 
         public function errorRotas()
         {
-            $this->view("error/noRotas.php");
+            $this->view("error/noRotas.php", []);
         }
 
     }
