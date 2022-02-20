@@ -5,7 +5,7 @@
     Db::set("HOST", "localhost");
     Db::set("USER", "root");
     Db::set("PASS", "");
-    Db::set("DBNAME", "simplework");
+    Db::set("DBNAME", "simplework1");
     Db::set("DBTYPE", "mysql");
 
 ?>

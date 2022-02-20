@@ -14,39 +14,36 @@
             self::load();
         }
 
-        public static function load()
+        public static function load() : void
         {
             require __DIR__ . "/../../Config/page.php";
         }
 
-        // Nome do site
-        public static function site_name($site)
+        public static function site_name($site) : string
         {
             self::$nome_site = $site;
             return self::$nome_site;
         }
 
-        public static function getSiteName()
+        public static function getSiteName() : string
         {
             self::load();
             return self::$nome_site;
         }
 
-        // Nome da página
-        public static function page_name($page_name)
+        public static function page_name($page_name) : string
         {
             self::$page_name = $page_name;
             return self::$page_name;
         }
 
-        public static function getPageName()
+        public static function getPageName() : string
         {
             self::load();
             return self::$page_name;
         }
 
-        // Gerar o titulo da página
-        public static function genTitlePage()
+        public static function genTitlePage() : string
         {
             self::load();
             if (empty(self::$page_name)) {
@@ -56,7 +53,7 @@
             }
         }
 
-        public static function getSiteLink()
+        public static function getSiteLink() : string
         {
             $http = (!empty($_SERVER['HTTPS'])) ? "https://":"http://"; 
             $dominio = $_SERVER["HTTP_HOST"];
@@ -71,11 +68,12 @@
             }
         }
 
-        public static function redirect( string $caminho ) {
+        public static function redirect( string $caminho ) : void
+        {
             header("Location: " . self::getSiteLink() . $caminho);
         }
 
-        public static function require_login( $resp )
+        public static function require_login( $resp ) : void
         {   
             session_start();
             
@@ -88,26 +86,5 @@
                 }
             }
         } 
-
-        public static function minify_page($buffer)
-        {
-            $search = array(
-                '/\>[^\S ]+/s',     // strip whitespaces after tags, except space
-                '/[^\S ]+\</s',     // strip whitespaces before tags, except space
-                '/(\s)+/s',         // shorten multiple whitespace sequences
-                '/<!--(.|\s)*?-->/' // Remove HTML comments
-            );
-        
-            $replace = array(
-                '>',
-                '<',
-                '\\1',
-                ''
-            );
-        
-            $buffer = preg_replace($search, $replace, $buffer);
-        
-            return $buffer;
-        }
         
     }

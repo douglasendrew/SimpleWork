@@ -22,7 +22,7 @@
 
         public static function load()
         {
-            
+               
             require __DIR__ . "/../../Config/database.php";
         }
 
@@ -63,25 +63,18 @@
 
             if(empty(self::$host) or empty(self::$user) or empty(self::$db_type) or empty(self::$db_name) )
             {
-   
-                echo "Erro! Verifique se você forneceu todas credenciais do banco de dados";
                 return false;
                 exit;
-
             }else {
 
                 try {
         
                     $pdo = new PDO(self::$db_type . ":host=" . self::$host . ";dbname=" . self::$db_name, self::$user, self::$pass);
-
                     return $pdo;
 
                 } catch (PDOException $e) {
-
-                    echo "Erro! Ocorreu um erro ao se conectar ao banco de dados: <code> ".$e->getMessage()." </code>";
                     return false;
                     exit;
-
                 }
 
             }

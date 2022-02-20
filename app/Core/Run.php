@@ -5,6 +5,7 @@
 
     use SimpleWork\Framework\Routes\Rotas;
     use SimpleWork\Framework\Page\Site;
+    use SimpleWork\Framework\Database\Db;
 
     class Run
     {
@@ -16,113 +17,120 @@
         public static function init()
         {
 
-            session_start();
-            
-            self::$tipo_requisicao = $_SERVER['REQUEST_METHOD'];
+            if(!Db::db_connect())
+            {
+                echo '<!DOCTYPE html> <html lang="pt-BR"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Banco de Dados - Erro</title> </head> <style>@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"); *{font-family: "Roboto", sans-serif;}</style> <body> <div style="text-align: center;"> <p style="font-size: 25px;">SimpleWork</p>Erro: Não foi possivel conectar ao banco de dados, verifique os dados fornecidos e tente novamente. </div></body> </html>';
+                exit;
+            }else {
 
-            // Pegar informações da URL
-            if (isset($_GET['pag'])) {
-                $url = $_GET['pag'];
-            }
-
-            if (!empty($url)) {
-                $url = explode("/", $url);
-
-                $controller = $url[0] . "Controller";
-                array_shift($url);
-
-                if (isset($url[0]) && !empty($url[0])) {
-                    $metodo = $url[0];
+                session_start();
+                
+                self::$tipo_requisicao = $_SERVER['REQUEST_METHOD'];
+    
+                // Pegar informações da URL
+                if (isset($_GET['pag'])) {
+                    $url = $_GET['pag'];
+                }
+    
+                if (!empty($url)) {
+                    $url = explode("/", $url);
+    
+                    $controller = $url[0] . "Controller";
                     array_shift($url);
+    
+                    if (isset($url[0]) && !empty($url[0])) {
+                        $metodo = $url[0];
+                        array_shift($url);
+                    } else {
+                        $metodo = "index";
+                    }
+    
+                    if (count($url) > 0) {
+                        $parametros = $url;
+                    }
                 } else {
+                    $controller = "homeController";
                     $metodo = "index";
                 }
-
-                if (count($url) > 0) {
-                    $parametros = $url;
-                }
-            } else {
-                $controller = "homeController";
-                $metodo = "index";
-            }
-
-            // Configurações das rotas
-            if (isset($controller)) {
-
-                $controller = str_replace("Controller", "", $controller);
-                self::$rota = $controller;
-
-                if (isset($metodo) and !empty($metodo)) {
-
-                    self::$rota .= "/" . $metodo;
-
-                    if (isset($parametros) and !empty($parametros)) {
-                        self::$rota .= "/";
+    
+                // Configurações das rotas
+                if (isset($controller)) {
+    
+                    $controller = str_replace("Controller", "", $controller);
+                    self::$rota = $controller;
+    
+                    if (isset($metodo) and !empty($metodo)) {
+    
+                        self::$rota .= "/" . $metodo;
+    
+                        if (isset($parametros) and !empty($parametros)) {
+                            self::$rota .= "/";
+                        }
                     }
                 }
-            }
-
-            $request_method = Rotas::get(self::$rota);
-
-            if ($request_method != self::$tipo_requisicao) {
-
-
-                if ($request_method == "PUT") {
-
-                    if (!isset($parametros) or empty($parametros)) {
+    
+                $request_method = Rotas::get(self::$rota);
+    
+                if ($request_method != self::$tipo_requisicao) {
+    
+    
+                    if ($request_method == "PUT") {
+    
+                        if (!isset($parametros) or empty($parametros)) {
+                            $controller = "errorController";
+                            $metodo = "errorRotas";
+                        }
+                    } else {
+    
                         $controller = "errorController";
-                        $metodo = "errorRotas";
+                        $metodo = "error404";
                     }
-                } else {
-
-                    $controller = "errorController";
-                    $metodo = "error404";
                 }
-            }
-
-            $controller = $controller . "Controller";
-            $dir = __DIR__ . "/../Framework/Controllers/" . $controller . ".php";
-
-            if (file_exists($dir)) {
-
-                require $dir;
-
-                $class = "\SimpleWork\Framework\Controllers\ " . $controller;
-                $class = str_replace(" ", "", $class);
-
-                $instanc = new $class;
-
-                if (method_exists($instanc, $metodo)) {
-
-                    call_user_func_array(array($instanc, $metodo), array($parametros));
-                } else {
-
-                    $controller = "errorController";
-                    $metodo = "error404";
-
+    
+                $controller = $controller . "Controller";
+                $dir = __DIR__ . "/../Framework/Controllers/" . $controller . ".php";
+    
+                if (file_exists($dir)) {
+    
+                    require $dir;
+    
                     $class = "\SimpleWork\Framework\Controllers\ " . $controller;
                     $class = str_replace(" ", "", $class);
-
+    
                     $instanc = new $class;
-
-                   
+    
+                    if (method_exists($instanc, $metodo)) {
+    
+                        call_user_func_array(array($instanc, $metodo), array($parametros));
+                    } else {
+    
+                        $controller = "errorController";
+                        $metodo = "error404";
+    
+                        $class = "\SimpleWork\Framework\Controllers\ " . $controller;
+                        $class = str_replace(" ", "", $class);
+    
+                        $instanc = new $class;
+    
+                       
+                        call_user_func_array(array($instanc, $metodo), array($parametros));
+    
+                        exit;
+                    }
+                } else {
+    
+                    $controller = "errorController";
+                    $metodo = "error404";
+    
+                    $class = "\SimpleWork\Framework\Controllers\ " . $controller;
+                    $class = str_replace(" ", "", $class);
+    
+                    $instanc = new $class;
+    
                     call_user_func_array(array($instanc, $metodo), array($parametros));
-
+    
                     exit;
                 }
-            } else {
-
-                $controller = "errorController";
-                $metodo = "error404";
-
-                $class = "\SimpleWork\Framework\Controllers\ " . $controller;
-                $class = str_replace(" ", "", $class);
-
-                $instanc = new $class;
-
-                call_user_func_array(array($instanc, $metodo), array($parametros));
-
-                exit;
             }
         }
 
